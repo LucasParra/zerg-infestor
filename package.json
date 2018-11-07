@@ -1,0 +1,18 @@
+{
+  "name": "zerg-infestor",
+  "version": "1.0.0",
+  "description": "Small software that download a FULL template from internet",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lucas Parra V. <lparra98dev@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "download-file": "^0.1.5",
+    "glob": "^7.1.3",
+    "shelljs": "^0.8.2",
+    "yargs": "^12.0.2"
+  }
+}
