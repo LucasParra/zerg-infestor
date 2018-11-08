@@ -20,7 +20,7 @@ if(yargs.argv.site && yargs.argv.baseUrl && yargs.argv.basePath)
 	let checker = new Checker("", baseUrl , basePath);
 	if(baseUrl  == baseUrl + site.substr(site.lastIndexOf('/') + 1,- 1))
 	{
-	    process.env.isConsoled = false;
+	    process.env.isConsoled = true;
 
 	   	let file = new IndexFile(basePath, baseUrl, site);
 
