@@ -2,10 +2,8 @@ const https = require('https');
 const fs = require('fs');
 const shell = require('shelljs');
 
-const HTMLElements = class HTMLElements
-{
-    constructor(url = "", basePath = "", baseUrl = "")
-    {
+const HTMLElements = class HTMLElements {
+    constructor(url = "", basePath = "", baseUrl = "") {
     	this.url = url.replace('"', '');
     	this.filename = "";
 
@@ -17,12 +15,10 @@ const HTMLElements = class HTMLElements
 
         this.totalHtmlElements = 0;
 
-    	this.download = function()
-    	{
+    	this.download = function() {
     		if(this.url.indexOf('HTTP') == -1 &&
                 this.url.indexOf('http') == -1 &&
-                this.url.indexOf('//') == -1)
-    		{
+                this.url.indexOf('//') == -1) {
                 let b = true;
     			this.setFileName();
 
@@ -33,51 +29,41 @@ const HTMLElements = class HTMLElements
                 shell.mkdir('-p', this.basePath + ((middlePath !== false) ? middlePath : ''));
 
                 let add = "";
-                if(this.filename.indexOf('.css') !== -1)
-                {
+                if(this.filename.indexOf('.css') !== -1) {
                     add = "-unchecked";
                 }
                 let file = fs.createWriteStream(this.basePath + ((middlePath !== false) ? middlePath : '') + this.filename + add, {flags: 'wx'});
-                file.on('error', function(err)
-                {
+                file.on('error', function(err) {
                     b = false;
                     file.end();
                 });
 
-                if(b)
-                {
-                    let options =
-                    {
+                if(b) {
+                    let options = {
                         method: 'GET',
                         headers: {'user-agent': 'node.js'}
                     };
-                    let request = https.get(fullUrl, options, (response) =>
-                    {
+                    https.get(fullUrl, options, (response) => {
                         response.pipe(file);
                         this.addOneAcc();
                         if(process.env.isConsoled == "true") console.log("Download Succes 2 -> " + this.basePath + ((middlePath !== false) ? middlePath : '') + this.filename);
-                    }).on('error', (err)=>
-                    {
+                    }).on('error', (err)=> {
                         if(process.env.isConsoled == "true") console.log(err);
                     });
                 }
     		}
     	}
 
-    	this.setFileName = function()
-    	{
+    	this.setFileName = function() {
     		this.filename = this.url.substr(this.url.lastIndexOf('/') + 1);
     	}
 
-    	this.getMiddlePath = function()
-    	{
+    	this.getMiddlePath = function() {
     		return (this.filename != this.url) ? this.url.substring(0, this.url.lastIndexOf('/') + 1) : false;
     	}
-        this.addOneAcc = function()
-        {
+        this.addOneAcc = function() {
             this.acc++;
-            if(this.acc == this.totalHtmlElements-1)
-            {
+            if(this.acc == this.totalHtmlElements-1) {
                 this.findFiles();
             }
         };

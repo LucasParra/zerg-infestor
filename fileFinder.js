@@ -3,33 +3,23 @@ const fs = require('fs');
 
 const FileTarget = require('./fileTarget');
 const Checker = require('./checker');
-var FileFinder = class FileFinder
-{
-	constructor(baseUrl = "", basePath = "")
-	{
+var FileFinder = class FileFinder {
+	constructor(baseUrl = "", basePath = "") {
 		let filesTarget = [];
 		let checker = new Checker("", baseUrl , basePath);
-		glob(basePath  + "**/**/**/**/**/**", (err, files)=>
-		{
-			if (err)
-			{
+		glob(basePath  + "**/**/**/**/**/**", (err, files)=> {
+			if (err) {
 				console.log('Error', err);
-			}
-			else
-			{
-				files.forEach((path, index) =>
-				{
-					if(fs.lstatSync(path).isFile() && path.indexOf('-unchecked') !== -1)
-					{
+			} else {
+				files.forEach((path) => {
+					if(fs.lstatSync(path).isFile() && path.indexOf('-unchecked') !== -1) {
 						filesTarget.push(new FileTarget(path, basePath));
 					}
 				});
-				if(filesTarget.length > 0)
-				{
+				if(filesTarget.length > 0) {
 					checker.checkFilesTarget(filesTarget);
 
-					filesTarget.forEach((fileTarget) =>
-					{
+					filesTarget.forEach((fileTarget) => {
 						fileTarget.changeName(fileTarget.path.replace('-unchecked', ''));
 					});
 				}
